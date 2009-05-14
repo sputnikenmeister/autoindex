@@ -1,0 +1,86 @@
+/*--------------------------------------------------------------------
+	Reset
+--------------------------------------------------------------------*/
+	
+	* {
+		box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		-webkit-box-sizing: border-box;
+		margin: 0;
+		outline: none;
+		padding: 0;
+		text-decoration: none;
+	}
+	
+	body {
+		font: 85%/160% 'arial', 'helvetica', sans-serif;
+	}
+	body * {
+		font: 100%/160% 'arial', 'helvetica', sans-serif;
+	}
+	
+	input,
+	table * {
+		font-family: 'helvetica neue', 'helvetica', sans-serif;
+	}
+	
+	code,
+	pre {
+		font-size: 90%;
+		font-family: 'monaco', sans-serif;
+	}
+	
+	ol,
+	ul {
+		list-style: none;
+	}
+	
+	strong {
+		font-weight: bold;
+	}
+	em {
+		font-style: italic;
+	}
+	
+/*--------------------------------------------------------------------
+	Content
+--------------------------------------------------------------------*/
+	
+	body {
+		color: #333333;
+		padding: 20px;
+	}
+	
+	h1 {
+		font-weight: bold;
+	}
+	
+	pre {
+		color: #777777;
+		margin: 10px 0;
+	}
+	
+	table {
+		border-collapse: collapse;
+		margin: 10px 0;
+	}
+	table thead th {
+		font-weight: bold;
+		padding: 0 10px 0 0;
+		text-align: left;
+	}
+	table thead th.name {
+		min-width: 25em;
+	}
+	table thead th.size {
+		min-width: 10em;
+	}
+	table tbody td {
+		padding: 0 10px 0 0;
+	}
+	table tbody tr.directory.first td,
+	table tbody tr.file.first td {
+		padding-top: 10px;
+	}
+	
+/*------------------------------------------------------------------*/
