@@ -28,12 +28,6 @@
 			</dict>
 			<dict>
 				<key>DocumentURL</key>
-				<string>file://localhost/Users/rowan/Sites/.autoindex/libs/markdown.php</string>
-				<key>StateType</key>
-				<string>DefaultTab</string>
-			</dict>
-			<dict>
-				<key>DocumentURL</key>
 				<string>file://localhost/Users/rowan/Sites/.autoindex/libs/autoindex.php</string>
 				<key>StateType</key>
 				<string>DefaultTab</string>
