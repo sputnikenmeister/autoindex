@@ -33,7 +33,7 @@
 	define('LOCATION_VIEWS', '/views/%/view.xsl');
 	
 	function text_closure($text) {
-		return htmlentities($text);
+		return '<pre>' . htmlentities($text) . '</pre>';
 	}
 	
 /*------------------------------------------------------------------------------
