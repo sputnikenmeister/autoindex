@@ -22,20 +22,14 @@
 				<link rel="stylesheet" type="text/css" media="screen" href="{@resource-path}/views/standard/view.css" />
 			</head>
 			<body>
-				<h1>
-					<xsl:text>Directory listing of </xsl:text>
-					
-					<xsl:apply-templates select="@remote-path" />
-				</h1>
-				
-				<xsl:if test="readme">
-					<pre><xsl:value-of select="readme" /></pre>
-				</xsl:if>
-				
-				<table cellspacing="0" cellpadding="0">
+				<table id="items">
 					<thead>
 						<tr>
-							<th class="name">Name</th>
+							<th class="name">
+								<xsl:text>Directory listing of </xsl:text>
+								
+								<xsl:apply-templates select="@remote-path" />
+							</th>
 							<th class="size">Size</th>
 							<th class="date">Date</th>
 							<th class="mime">Mime</th>
@@ -79,56 +73,80 @@
 						</xsl:choose>
 					</tbody>
 				</table>
+				
+				<xsl:if test="readme">
+					<div id="preview">
+						<xsl:copy-of select="readme/node()" />
+					</div>
+				</xsl:if>
 			</body>
 		</html>
 	</xsl:template>
 	
 	<xsl:template match="item[@type = 'directory']">
-		<tr class="directory">
-			<xsl:if test="position() = 1">
-				<xsl:attribute name="class">
-					<xsl:text>directory first</xsl:text>
-				</xsl:attribute>
-			</xsl:if>
+		<tr>
+			<xsl:attribute name="class">
+				<xsl:text>directory</xsl:text>
+				
+				<xsl:if test="position() = 1">
+					<xsl:text> first</xsl:text>
+				</xsl:if>
+				
+				<xsl:if test="position() = last()">
+					<xsl:text> last</xsl:text>
+				</xsl:if>
+			</xsl:attribute>
 			
-			<td>
+			<td class="name">
 				<a href="{@remote-path}">
 					<xsl:value-of select="@name" />
 					<xsl:text>/</xsl:text>
 				</a>
+				
+				<xsl:if test="@link">
+					<span class="link">
+						<xsl:value-of select="@link" />
+					</span>
+				</xsl:if>
 			</td>
-			<td>
+			<td class="size">
 				<xsl:text>&#x2013;</xsl:text>
 			</td>
-			<td>
+			<td class="date">
 				<xsl:apply-templates select="date" />
 			</td>
-			<td>
+			<td class="mime">
 				<xsl:apply-templates select="@mime" />
 			</td>
 		</tr>
 	</xsl:template>
 	
 	<xsl:template match="item[@type = 'file']">
-		<tr class="file">
-			<xsl:if test="position() = 1">
-				<xsl:attribute name="class">
-					<xsl:text>file first</xsl:text>
-				</xsl:attribute>
-			</xsl:if>
+		<tr>
+			<xsl:attribute name="class">
+				<xsl:text>file</xsl:text>
+				
+				<xsl:if test="position() = 1">
+					<xsl:text> first</xsl:text>
+				</xsl:if>
+				
+				<xsl:if test="position() = last()">
+					<xsl:text> last</xsl:text>
+				</xsl:if>
+			</xsl:attribute>
 			
-			<td>
+			<td class="name">
 				<a href="{@remote-path}">
 					<xsl:value-of select="@name" />
 				</a>
 			</td>
-			<td>
+			<td class="size">
 				<xsl:apply-templates select="@size" />
 			</td>
-			<td>
+			<td class="date">
 				<xsl:apply-templates select="date" />
 			</td>
-			<td>
+			<td class="mime">
 				<xsl:apply-templates select="@mime" />
 			</td>
 		</tr>

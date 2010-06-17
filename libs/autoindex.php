@@ -117,7 +117,8 @@
 				if ($this->isIgnored($path)) continue;
 				
 				if (is_null($readme) and $this->isReadme($path)) {
-					$readme = $path;
+					$readme = $this->isReadme($path);
+					$readme->path = $path;
 				}
 				
 				$name = basename($path);
@@ -127,8 +128,9 @@
 				if (is_dir($path)) {
 					$item->setAttribute('remote-path', "{$remote_path}{$name}/");
 					$item->setAttribute('type', 'directory');
-					
-				} else {
+				}
+				
+				else {
 					$item->setAttribute('remote-path', "{$remote_path}{$name}");
 					$item->setAttribute('type', 'file');
 				}
@@ -137,6 +139,12 @@
 				$item->setAttribute('name', $name);
 				$item->setAttribute('size', filesize($path));
 				$item->setAttribute('mime', mime_content_type($path));
+				
+				if (is_link($path)) {
+					$link = readlink($path);
+					
+					$item->setAttribute('link', $link);
+				}
 				
 				$timestamp = filemtime($path);
 				$date = $this->document->createElement('date');
@@ -150,11 +158,27 @@
 			}
 			
 			// Add readme:
-			if (!is_null($readme) and is_readable($readme)) {
-				$item = $this->document->createElement('readme');
-				$item->appendChild($this->document->createTextNode(
-					file_get_contents($readme)
+			if (!is_null($readme) and is_readable($readme->path)) {
+				// Load the text as HTML for sanity
+				$document = new DOMDocument();
+				$document->loadHTML(call_user_func(
+					$readme->callback,
+					file_get_contents($readme->path)
 				));
+				$xpath = new DOMXPath($document);
+				
+				// Extract the sanatised text:
+				$text = ''; $nodes = $xpath->query('/html/body/node()');
+				
+				foreach ($nodes as $node) {
+					$text .= $document->saveXML($node);
+				}
+				
+				$fragment = $this->document->createDocumentFragment();
+				$fragment->appendXML($text);
+				
+				$item = $this->document->createElement('readme');
+				$item->appendChild($fragment);
 				$parent->appendChild($item);
 			}
 		}
@@ -175,13 +199,20 @@
 			return false;
 		}
 		
-		public function readme($expression) {
-			$this->readmes[] = $expression;
+		public function readme($expression, closure $callback = null) {
+			if (is_null($callback)) $callback = function($text) {
+				return htmlentities($text);
+			};
+			
+			$this->readmes[] = (object)array(
+				'expression'	=> $expression,
+				'callback'		=> $callback
+			);
 		}
 		
 		public function isReadme($path) {
-			foreach ($this->readmes as $expression) {
-				if (preg_match($expression, $path)) return true;
+			foreach ($this->readmes as $data) {
+				if (preg_match($data->expression, $path)) return $data;
 			}
 			
 			return false;

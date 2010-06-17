@@ -6,6 +6,10 @@
 		box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		-webkit-box-sizing: border-box;
+		font-family: inherit;
+		font-size: inherit;
+		font-style: inherit;
+		font-weight: inherit;
 		margin: 0;
 		outline: none;
 		padding: 0;
@@ -13,21 +17,28 @@
 	}
 	
 	body {
-		font: 85%/160% 'arial', 'helvetica', sans-serif;
-	}
-	body * {
-		font: 100%/160% 'arial', 'helvetica', sans-serif;
+		background: hsl(0, 0%, 18%);
+		color: hsl(0, 0%, 100%);
+		font: 9pt/15pt 'lucida grande', 'helvetica', sans-serif;
+		text-shadow: 1px 1px 0 black;
 	}
 	
-	input,
-	table * {
-		font-family: 'helvetica neue', 'helvetica', sans-serif;
+	a {
+		color: hsl(70, 100%, 80%);
+	}
+	a:hover {
+		color: hsl(0, 0%, 100%);
+	}
+	a[href ^= "mailto:"]:before {
+		content: '<';
+	}
+	a[href ^= "mailto:"]:after {
+		content: '>';
 	}
 	
 	code,
 	pre {
-		font-size: 90%;
-		font-family: 'monaco', sans-serif;
+		font: 9pt 'monaco', sans-serif;
 	}
 	
 	ol,
@@ -43,44 +54,151 @@
 	}
 	
 /*--------------------------------------------------------------------
-	Content
+	Preview
 --------------------------------------------------------------------*/
 	
-	body {
-		color: #333333;
+	#preview {
+		padding: 10px;
+	}
+	#preview :first-child {
+		margin-top: 10px;
+	}
+	
+	#preview h1,
+	#preview h2,
+	#preview h3,
+	#preview h4,
+	#preview h5,
+	#preview h6 {
+		font-weight: bold;
+		margin: 20px 10px 10px 10px;
+	}
+	#preview h1 {
+		font-size: 15pt;
+		line-height: 17pt;
+	}
+	#preview h2 {
+		border-top: 5px solid hsla(0, 0%, 0%, 0.1);
+		color: hsl(0, 0%, 90%);
+		font-size: 13pt;
+		line-height: 15pt;
+		margin-top: 30px;
+		padding: 30px 0 0 0;
+	}
+	#preview h3 {
+		color: hsl(0, 0%, 80%);
+		font-size: 11pt;
+		line-height: 15pt;
+	}
+	#preview h4,
+	#preview h5,
+	#preview h6 {
+		color: hsl(0, 0%, 80%);
+	}
+	
+	#preview p {
+		margin: 10px;
+	}
+	
+	#preview ol,
+	#preview ul {
+		margin: 10px 0;
+	}
+	#preview li {
+		margin: 0 0 0 10px;
+	}
+	#preview ol ol,
+	#preview ol ul,
+	#preview ul ol,
+	#preview ul ul {
+		margin: 0 0 0 10px;
+	}
+	#preview ol li {
+		list-style: decimal inside;
+	}
+	#preview ul li {
+		list-style: disc inside;
+	}
+	
+	#preview pre {
+		background: hsla(0, 0%, 0%, 0.1);
+		margin: 10px;
+		padding: 10px;
+	}
+	
+/*--------------------------------------------------------------------
+	Items
+--------------------------------------------------------------------*/
+	
+	#items {
+		border-spacing: 0;
+		white-space: nowrap;
+		width: 100%;
+	}
+	#items thead {
+		background: hsl(0, 0%, 16%);
+	}
+	#items tbody {
+		background: hsl(0, 0%, 20%);
+	}
+	#items th:nth-child(2n),
+	#items td:nth-child(2n) {
+		background: hsla(0, 0%, 40%, 0.1);
+	}
+	#items th {
+		text-align: left;
+		vertical-align: bottom;
+	}
+	#items th:first-child {
+		white-space: normal;
+	}
+	#items th,
+	#items td {
+		padding: 0 20px;
+	}
+	#items th {
 		padding: 20px;
 	}
-	
-	h1 {
-		font-weight: bold;
+	#items th:first-child,
+	#items td:first-child {
+		padding-left: 20px;
+	}
+	#items th:last-child,
+	#items td:last-child {
+		padding-right: 20px;
+	}
+	#items tr.directory.first td,
+	#items tr.file.first td {
+		padding-top: 20px;
+	}
+	#items tr.directory.last td,
+	#items tr.file.last td {
+		padding-bottom: 20px;
+	}
+	#items .file {
+		background: hsla(0, 0%, 40%, 0.1);
 	}
 	
-	pre {
-		color: #777777;
-		margin: 10px 0;
+	#items .name {
+		width: 50%;
 	}
-	
-	table {
-		border-collapse: collapse;
-		margin: 10px 0;
+	#items .name .link {
+		color: hsl(0, 0%, 50%);
+		float: right;
+		margin: 0 0 0 -100%;
 	}
-	table thead th {
-		font-weight: bold;
-		padding: 0 10px 0 0;
-		text-align: left;
+	#items .name .link:before {
+		content: '\0bb';
+		margin: 0 1ex;
 	}
-	table thead th.name {
-		min-width: 25em;
+	#items .size {
+		width: 7%;
 	}
-	table thead th.size {
-		min-width: 10em;
+	#items .date {
+		width: 12%;
 	}
-	table tbody td {
-		padding: 0 10px 0 0;
-	}
-	table tbody tr.directory.first td,
-	table tbody tr.file.first td {
-		padding-top: 10px;
+	#items .mime {
+		width: 12%;
 	}
 	
 /*------------------------------------------------------------------*/
