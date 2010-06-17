@@ -32,6 +32,10 @@
 	define('LOCATION_SOURCES', '/sources/%/source.php');
 	define('LOCATION_VIEWS', '/views/%/view.xsl');
 	
+	function text_closure($text) {
+		return htmlentities($text);
+	}
+	
 /*------------------------------------------------------------------------------
 	Resource
 ------------------------------------------------------------------------------*/
@@ -199,10 +203,8 @@
 			return false;
 		}
 		
-		public function readme($expression, closure $callback = null) {
-			if (is_null($callback)) $callback = function($text) {
-				return htmlentities($text);
-			};
+		public function readme($expression, $callback = null) {
+			if (is_null($callback)) $callback = 'text_closure';
 			
 			$this->readmes[] = (object)array(
 				'expression'	=> $expression,
