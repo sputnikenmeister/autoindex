@@ -16,7 +16,7 @@
 	$view->ignore('%/(Network Trash Folder|Temporary Items)$%');
 	
 	// Ignore hidden files:
-	//$view->ignore('%/\.%');
+	$view->ignore('%/\.(?!autoindex)%');
 	
 	// Ignore itself:
 	//$view->ignore('%/\.autoindex(/|$)%');

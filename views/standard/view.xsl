@@ -17,11 +17,22 @@
 		<html>
 			<head>
 				<title>
+					<xsl:if test="readme//h1">
+						<xsl:value-of select="readme//h1" />
+						<xsl:text> &#x2013; </xsl:text>
+					</xsl:if>
+					
 					<xsl:value-of select="@remote-path" />
 				</title>
 				<link rel="stylesheet" type="text/css" media="screen" href="{@resource-path}/views/standard/view.css" />
 			</head>
 			<body>
+				<xsl:if test="readme">
+					<div id="preview">
+						<xsl:copy-of select="readme/node()" />
+					</div>
+				</xsl:if>
+				
 				<table id="items">
 					<thead>
 						<tr>
@@ -73,12 +84,6 @@
 						</xsl:choose>
 					</tbody>
 				</table>
-				
-				<xsl:if test="readme">
-					<div id="preview">
-						<xsl:copy-of select="readme/node()" />
-					</div>
-				</xsl:if>
 			</body>
 		</html>
 	</xsl:template>

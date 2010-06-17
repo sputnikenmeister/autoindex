@@ -13,5 +13,3 @@ listet, and completely customise the generated output using XSLT.
 
 - PHP 5.3 or above
 - PHP's LibXML module, with the XSLT extension enabled (--with-xsl)
-
-![Screenshot](screenshot.png)

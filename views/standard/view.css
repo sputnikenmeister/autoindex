@@ -126,6 +126,10 @@
 		padding: 10px;
 	}
 	
+	#location {
+		padding: 20px;
+	}
+	
 /*--------------------------------------------------------------------
 	Items
 --------------------------------------------------------------------*/
@@ -136,14 +140,17 @@
 		width: 100%;
 	}
 	#items thead {
-		background: hsl(0, 0%, 16%);
+		background: hsla(0, 0%, 40%, 0.05);
+		background: hsl(0, 0%, 15%);
 	}
 	#items tbody {
-		background: hsl(0, 0%, 20%);
-	}
-	#items th:nth-child(2n),
-	#items td:nth-child(2n) {
 		background: hsla(0, 0%, 40%, 0.1);
+	}
+	#items th:nth-child(2n) {
+		background: hsla(0, 0%, 40%, 0.06);
+	}
+	#items td:nth-child(2n) {
+		background: hsla(0, 0%, 40%, 0.09);
 	}
 	#items th {
 		text-align: left;
@@ -175,7 +182,8 @@
 	#items tr.file.last td {
 		padding-bottom: 20px;
 	}
-	#items .file {
+	#items .directory + .file,
+	#items .directory ~ .file {
 		background: hsla(0, 0%, 40%, 0.1);
 	}
 	
@@ -183,7 +191,7 @@
 		width: 50%;
 	}
 	#items .name .link {
-		color: hsl(0, 0%, 50%);
+		color: hsla(0, 0%, 100%, 0.4);
 		float: right;
 		margin: 0 0 0 -100%;
 	}
