@@ -139,6 +139,12 @@
 				<a href="{@remote-path}">
 					<xsl:value-of select="@name" />
 				</a>
+				
+				<xsl:if test="@link">
+					<span class="link">
+						<xsl:value-of select="@link" />
+					</span>
+				</xsl:if>
 			</td>
 			<td class="size">
 				<xsl:apply-templates select="@size" />
