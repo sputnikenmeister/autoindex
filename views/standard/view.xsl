@@ -108,10 +108,10 @@
 					<xsl:text>/</xsl:text>
 				</a>
 				
-				<xsl:if test="@link">
-					<span class="link">
-						<xsl:value-of select="@link" />
-					</span>
+				<xsl:if test="@link-path">
+					<a class="link" href="{@link-path}">
+						<xsl:value-of select="@link-path" />
+					</a>
 				</xsl:if>
 			</td>
 			<td class="size">
@@ -145,10 +145,10 @@
 					<xsl:value-of select="@name" />
 				</a>
 				
-				<xsl:if test="@link">
-					<span class="link">
-						<xsl:value-of select="@link" />
-					</span>
+				<xsl:if test="@link-path">
+					<a class="link" href="{@link-path}">
+						<xsl:value-of select="@link-path" />
+					</a>
 				</xsl:if>
 			</td>
 			<td class="size">

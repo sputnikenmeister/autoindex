@@ -115,7 +115,9 @@
 		}
 		
 		protected function generate($remote_path, $local_path, $parent) {
-			$paths = glob($local_path . '/{,.}*', GLOB_BRACE);
+			chdir($local_path);
+			
+			$paths = glob('{,.}*', GLOB_BRACE);
 			$readme = null;
 			
 			// List files:
@@ -141,16 +143,19 @@
 					$item->setAttribute('type', 'file');
 				}
 				
+				if (is_link($path)) {
+					$link = realpath(readlink($path));
+					
+					if (strpos($link, $local_path) === 0) {
+						$link = substr($link, strlen($local_path) + 1);
+						$item->setAttribute('link-path', $link);
+					}
+				}
+				
 				$item->setAttribute('local-path', $path);
 				$item->setAttribute('name', $name);
 				$item->setAttribute('size', filesize($path));
 				$item->setAttribute('mime', mime_content_type($path));
-				
-				if (is_link($path)) {
-					$link = readlink($path);
-					
-					$item->setAttribute('link', $link);
-				}
 				
 				$timestamp = filemtime($path);
 				$date = $this->document->createElement('date');

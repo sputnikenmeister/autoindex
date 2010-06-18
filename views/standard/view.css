@@ -187,8 +187,9 @@
 	}
 	#items td.name .link {
 		color: hsla(0, 0%, 100%, 0.4);
-		float: right;
-		margin: 0 0 0 -100%;
+	}
+	#items td.name .link:hover {
+		color: hsla(0, 0%, 100%, 0.6);
 	}
 	#items td.name .link:before {
 		content: '\0bb';
