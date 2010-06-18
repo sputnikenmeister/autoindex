@@ -24,7 +24,7 @@
 	}
 	
 	a {
-		color: hsl(70, 100%, 80%);
+		color: hsl(200, 50%, 85%);
 	}
 	a:hover {
 		color: hsl(0, 0%, 100%);
@@ -149,10 +149,6 @@
 	#items td:nth-child(2n) {
 		background: hsla(0, 0%, 40%, 0.09);
 	}
-	#items th {
-		text-align: left;
-		vertical-align: bottom;
-	}
 	#items th:first-child {
 		white-space: normal;
 	}
@@ -162,6 +158,8 @@
 	}
 	#items th {
 		padding: 20px;
+		text-align: left;
+		vertical-align: bottom;
 	}
 	#items th:first-child,
 	#items td:first-child {
@@ -179,30 +177,30 @@
 	#items tr.file.last td {
 		padding-bottom: 20px;
 	}
-	#items .directory + .file,
-	#items .directory ~ .file {
+	#items tr.directory + .file,
+	#items tr.directory ~ .file {
 		background: hsla(0, 0%, 40%, 0.1);
 	}
 	
-	#items .name {
+	#items td.name {
 		width: 50%;
 	}
-	#items .name .link {
+	#items td.name .link {
 		color: hsla(0, 0%, 100%, 0.4);
 		float: right;
 		margin: 0 0 0 -100%;
 	}
-	#items .name .link:before {
+	#items td.name .link:before {
 		content: '\0bb';
 		margin: 0 1ex;
 	}
-	#items .size {
+	#items td.size {
 		width: 7%;
 	}
-	#items .date {
+	#items td.date {
 		width: 12%;
 	}
-	#items .mime {
+	#items td.mime {
 		width: 12%;
 	}
 	

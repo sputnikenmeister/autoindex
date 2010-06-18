@@ -19,23 +19,25 @@
 		return $text;
 	}
 	
+	// Allow anything:
+	$view->rule('%.%', true);
+	
 	// Ignore OSX meta data:
-	$view->ignore('%/\.(Apple|DS_)%');
-	$view->ignore('%/(Network Trash Folder|Temporary Items)$%');
+	$view->rule('%/\.(Apple|DS_)%', false);
+	$view->rule('%/(Network Trash Folder|Temporary Items)$%', false);
 	
 	// Ignore hidden files:
-	$view->ignore('%/\.(?!autoindex)%');
+	$view->rule('%/\.%', false);
 	
 	// Ignore itself:
-	//$view->ignore('%/\.autoindex(/|$)%');
+	$view->rule('%/\.?autoindex(/|$)%', true);
 	
 	// Add readme files:
 	$view->readme('%/readme(\.txt)?$%i');
-	$view->readme('%/readme\.md$%i', 'markdown_closure');
-	$view->readme('%/readme\.html?$%i', 'html_closure');
+	$view->readme('%/readme\.md$%i', true, 'markdown_closure');
+	$view->readme('%/readme\.html?$%i', true, 'html_closure');
 	
-	$view->execute();
-	$view->display();
+	$view->execute()->display();
 	
 /*----------------------------------------------------------------------------*/
 ?>

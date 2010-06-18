@@ -73,7 +73,7 @@
 		protected $processor = null;
 		protected $stylesheet = null;
 		protected $document = null;
-		protected $ignores = array();
+		protected $rules = array();
 		protected $readmes = array();
 		
 		public function load($handle) {
@@ -100,6 +100,8 @@
 			$this->document->appendChild($root);
 			
 			$this->generate($remote_path, $local_path, $root);
+			
+			return $this;
 		}
 		
 		public function debug() {
@@ -118,7 +120,7 @@
 			
 			// List files:
 			foreach ($paths as $path) {
-				if ($this->isIgnored($path)) continue;
+				if (!$this->isAllowed($path)) continue;
 				
 				if (is_null($readme) and $this->isReadme($path)) {
 					$readme = $this->isReadme($path);
@@ -187,37 +189,48 @@
 			}
 		}
 		
-		public function ignore($expression) {
-			$this->ignores[] = $expression;
+		public function rule($expression, $allowed = true) {
+			$this->rules[] = (object)array(
+				'expression'	=> $expression,
+				'allowed'		=> $allowed
+			);
+			
+			return $this;
 		}
 		
-		public function isIgnored($path) {
+		public function isAllowed($path) {
 			$name = basename($path);
+			$state = false;
 			
-			if ($name == '.' or $name == '..') return true;
+			if ($name == '.' or $name == '..') return false;
 			
-			foreach ($this->ignores as $expression) {
-				if (preg_match($expression, $path)) return true;
+			foreach ($this->rules as $data) {
+				if (preg_match($data->expression, $path)) $state = $data->allowed;
 			}
 			
-			return false;
+			return $state;
 		}
 		
-		public function readme($expression, $callback = null) {
+		public function readme($expression, $allowed = true, $callback = null) {
 			if (is_null($callback)) $callback = 'text_closure';
 			
 			$this->readmes[] = (object)array(
 				'expression'	=> $expression,
+				'allowed'		=> $allowed,
 				'callback'		=> $callback
 			);
+			
+			return $this;
 		}
 		
 		public function isReadme($path) {
+			$state = false;
+			
 			foreach ($this->readmes as $data) {
-				if (preg_match($data->expression, $path)) return $data;
+				if (preg_match($data->expression, $path)) $state = $data;
 			}
 			
-			return false;
+			return $state;
 		}
 	}
 	
