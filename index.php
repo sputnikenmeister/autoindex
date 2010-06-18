@@ -11,31 +11,27 @@
 	
 /*----------------------------------------------------------------------------*/
 	
-	function markdown_closure($text) {
-		return Markdown($text);
-	}
-	
-	function html_closure($text) {
-		return $text;
-	}
-	
 	// Allow anything:
-	$view->rule('%.%', true);
+	$view->allow('%.%');
 	
 	// Ignore OSX meta data:
-	$view->rule('%/\.(Apple|DS_)%', false);
-	$view->rule('%/(Network Trash Folder|Temporary Items)$%', false);
+	$view->deny('%/\.(Apple|DS_)%');
+	$view->deny('%/(Network Trash Folder|Temporary Items)$%');
 	
 	// Ignore hidden files:
-	$view->rule('%/\.%', false);
+	$view->deny('%/\.%');
 	
-	// Ignore itself:
-	$view->rule('%/\.?autoindex(/|$)%', true);
+	// Allow itself:
+	$view->allow('%/\.?autoindex(/|$)%');
 	
 	// Add readme files:
 	$view->readme('%/readme(\.txt)?$%i');
-	$view->readme('%/readme\.md$%i', true, 'markdown_closure');
-	$view->readme('%/readme\.html?$%i', true, 'html_closure');
+	$view->readme('%/readme\.md$%i', function($text) {
+		return Markdown($text);
+	});
+	$view->readme('%/readme\.html?$%i', function($text) {
+		return $text;
+	});
 	
 	$view->execute()->display();
 	

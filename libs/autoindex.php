@@ -32,10 +32,6 @@
 	define('LOCATION_SOURCES', '/sources/%/source.php');
 	define('LOCATION_VIEWS', '/views/%/view.xsl');
 	
-	function text_closure($text) {
-		return '<pre>' . htmlentities($text) . '</pre>';
-	}
-	
 /*------------------------------------------------------------------------------
 	Resource
 ------------------------------------------------------------------------------*/
@@ -117,7 +113,7 @@
 		protected function generate($remote_path, $local_path, $parent) {
 			chdir($local_path);
 			
-			$paths = glob('{,.}*', GLOB_BRACE);
+			$paths = glob($local_path . '/{,.}*', GLOB_BRACE);
 			$readme = null;
 			
 			// List files:
@@ -194,10 +190,19 @@
 			}
 		}
 		
-		public function rule($expression, $allowed = true) {
+		public function allow($expression) {
 			$this->rules[] = (object)array(
 				'expression'	=> $expression,
-				'allowed'		=> $allowed
+				'allowed'		=> true
+			);
+			
+			return $this;
+		}
+		
+		public function deny($expression) {
+			$this->rules[] = (object)array(
+				'expression'	=> $expression,
+				'allowed'		=> false
 			);
 			
 			return $this;
@@ -216,12 +221,13 @@
 			return $state;
 		}
 		
-		public function readme($expression, $allowed = true, $callback = null) {
-			if (is_null($callback)) $callback = 'text_closure';
+		public function readme($expression, $callback = null) {
+			if (is_null($callback)) $callback = function($text) {
+				return '<pre>' . htmlentities($text) . '</pre>';
+			};
 			
 			$this->readmes[] = (object)array(
 				'expression'	=> $expression,
-				'allowed'		=> $allowed,
 				'callback'		=> $callback
 			);
 			

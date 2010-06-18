@@ -59,10 +59,13 @@
 	
 	#preview {
 		max-width: 60em;
-		padding: 10px;
+		padding: 20px;
 	}
-	#preview :first-child {
-		margin-top: 10px;
+	#preview > :first-child {
+		margin-top: 0;
+	}
+	#preview > :last-child {
+		margin-bottom: 0;
 	}
 	
 	#preview h1,
@@ -72,7 +75,7 @@
 	#preview h5,
 	#preview h6 {
 		font-weight: bold;
-		margin: 20px 10px 10px 10px;
+		margin: 20px 0 10px 0;
 	}
 	#preview h1 {
 		font-size: 15pt;
@@ -98,7 +101,7 @@
 	}
 	
 	#preview p {
-		margin: 10px;
+		margin: 10px 0;
 	}
 	
 	#preview ol,
@@ -107,6 +110,9 @@
 	}
 	#preview li {
 		margin: 0 0 0 10px;
+	}
+	#preview li > :first-child {
+		margin-top: 0;
 	}
 	#preview ol ol,
 	#preview ol ul,
