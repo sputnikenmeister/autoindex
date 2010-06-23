@@ -82,8 +82,8 @@
 		}
 		
 		public function execute() {
-			$remote_path = $_SERVER['REQUEST_URI'];
-			$local_path = realpath($_SERVER['DOCUMENT_ROOT'] . $_SERVER['REQUEST_URI']);
+			$remote_path = preg_replace('/\?.*/', null, $_SERVER['REQUEST_URI']);
+			$local_path = realpath($_SERVER['DOCUMENT_ROOT'] . $remote_path);
 			
 			$this->document = new DOMDocument('1.0', 'UTF-8');
 			$this->document->formatOutput = true;
@@ -107,6 +107,16 @@
 		}
 		
 		public function display() {
+			if (isset($_REQUEST['ascending'])) {
+				$this->processor->setParameter(null, 'column', $_REQUEST['ascending']);
+				$this->processor->setParameter(null, 'direction', 'ascending');
+			}
+			
+			else if (isset($_REQUEST['descending'])) {
+				$this->processor->setParameter(null, 'column', $_REQUEST['descending']);
+				$this->processor->setParameter(null, 'direction', 'descending');
+			}
+			
 			echo $this->processor->transformToXML($this->document);
 		}
 		

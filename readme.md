@@ -15,7 +15,7 @@ listet, and completely customise the generated output using XSLT.
 - PHP's LibXML and LibXSL extensions
 - A UNIX like operating system
 
-### Installation on Apache
+## Installation on Apache
 
 1.	Download Neat Index from GitHub and extract the archive
 2.	Move the extracted directory to the document root of your webserver and rename to `.autoindex`
@@ -29,6 +29,6 @@ listet, and completely customise the generated output using XSLT.
 
 5.	Sit back and marvel at your fancy looking index pages.
 
-### Screenshot
+## Screenshot
 
 ![Screenshot](http://github.com/rowan-lewis/autoindex/raw/master/screenshot.png)

@@ -11,7 +11,7 @@
 	/>
 	
 	<xsl:param name="column" select="'name'" />
-	<xsl:param name="direction" select="'descending'" />
+	<xsl:param name="direction" select="'ascending'" />
 	
 	<xsl:template match="/index">
 		<html>
@@ -51,15 +51,15 @@
 						<xsl:choose>
 							<xsl:when test="$column = 'name'">
 								<xsl:apply-templates select="item[@type = 'directory']">
-									<xsl:sort select="name" order="{$direction}" />
+									<xsl:sort select="translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ.', 'abcdefghijklmnopqrstuvwxyz')" order="{$direction}" />
 								</xsl:apply-templates>
 								<xsl:apply-templates select="item[@type = 'file']">
-									<xsl:sort select="name" order="{$direction}" />
+									<xsl:sort select="translate(@name, 'ABCDEFGHIJKLMNOPQRSTUVWXYZ.', 'abcdefghijklmnopqrstuvwxyz')" order="{$direction}" />
 								</xsl:apply-templates>
 							</xsl:when>
 							<xsl:when test="$column = 'size'">
 								<xsl:apply-templates select="item[@type = 'directory']">
-									<xsl:sort select="name" order="{$direction}" />
+									<xsl:sort select="@size" order="{$direction}" />
 								</xsl:apply-templates>
 								<xsl:apply-templates select="item[@type = 'file']">
 									<xsl:sort select="@size" data-type="number" order="{$direction}" />
@@ -75,10 +75,10 @@
 							</xsl:when>
 							<xsl:when test="$column = 'mime'">
 								<xsl:apply-templates select="item[@type = 'directory']">
-									<xsl:sort select="date/@mime" order="{$direction}" />
+									<xsl:sort select="@mime" order="{$direction}" />
 								</xsl:apply-templates>
 								<xsl:apply-templates select="item[@type = 'file']">
-									<xsl:sort select="date/@mime" order="{$direction}" />
+									<xsl:sort select="@mime" order="{$direction}" />
 								</xsl:apply-templates>
 							</xsl:when>
 						</xsl:choose>
