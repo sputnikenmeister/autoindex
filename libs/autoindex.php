@@ -82,7 +82,7 @@
 		}
 		
 		public function execute() {
-			$remote_path = preg_replace('/\?.*/', null, $_SERVER['REQUEST_URI']);
+			$remote_path = urldecode(preg_replace('/\?.*/', null, $_SERVER['REQUEST_URI']));
 			$local_path = realpath($_SERVER['DOCUMENT_ROOT'] . $remote_path);
 			
 			$this->document = new DOMDocument('1.0', 'UTF-8');
@@ -123,7 +123,8 @@
 		protected function generate($remote_path, $local_path, $parent) {
 			chdir($local_path);
 			
-			$paths = glob($local_path . '/{,.}*', GLOB_BRACE);
+			$local_path_escaped = preg_replace('/(\*|\?|\[)/', '[$1]', $local_path);
+			$paths = glob($local_path_escaped . '/{,.}*', GLOB_BRACE);
 			$readme = null;
 			
 			// List files:
